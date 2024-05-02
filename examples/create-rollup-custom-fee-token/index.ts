@@ -1,4 +1,4 @@
-import { createPublicClient, http, Address } from 'viem';
+import { createPublicClient, http, Address} from 'viem';
 import { generatePrivateKey, privateKeyToAccount } from 'viem/accounts';
 import { arbitrumSepolia } from 'viem/chains';
 import { createRollupPrepareConfig, prepareChainConfig, createRollup } from '@arbitrum/orbit-sdk';
@@ -18,10 +18,6 @@ if (typeof process.env.DEPLOYER_PRIVATE_KEY === 'undefined') {
   throw new Error(`Please provide the "DEPLOYER_PRIVATE_KEY" environment variable`);
 }
 
-if (typeof process.env.CUSTOM_FEE_TOKEN_ADDRESS === 'undefined') {
-  throw new Error(`Please provide the "CUSTOM_FEE_TOKEN_ADDRESS" environment variable`);
-}
-
 // load or generate a random batch poster account
 const batchPosterPrivateKey = withFallbackPrivateKey(process.env.BATCH_POSTER_PRIVATE_KEY);
 const batchPoster = privateKeyToAccount(batchPosterPrivateKey).address;
@@ -32,17 +28,15 @@ const validator = privateKeyToAccount(validatorPrivateKey).address;
 
 // set the parent chain and create a public client for it
 const parentChain = arbitrumSepolia;
-const parentChainPublicClient = createPublicClient({
-  chain: parentChain,
-  transport: http(),
-});
+const parentChainPublicClient = createPublicClient({ chain: parentChain, transport: http() });
 
 // load the deployer account
 const deployer = privateKeyToAccount(sanitizePrivateKey(process.env.DEPLOYER_PRIVATE_KEY));
 
 async function main() {
   // generate a random chain id
-  const chainId = generateChainId();
+  const chainId = Number(process.env.CHAIN_ID) || generateChainId();
+
   // set the custom fee token
   const nativeToken: Address = process.env.CUSTOM_FEE_TOKEN_ADDRESS as `0x${string}`;
 
@@ -65,6 +59,9 @@ async function main() {
         batchPoster,
         validators: [validator],
         nativeToken,
+        maxDataSize: BigInt(104857),
+        deployFactoriesToL2: true,
+        maxFeePerGasForRetryables: BigInt(100000000),
       },
       account: deployer,
       parentChainPublicClient,

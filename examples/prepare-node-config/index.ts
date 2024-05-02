@@ -6,6 +6,7 @@ import {
   PrepareNodeConfigParams,
   createRollupPrepareTransaction,
   createRollupPrepareTransactionReceipt,
+  prepareChainConfig,
   prepareNodeConfig,
 } from '@arbitrum/orbit-sdk';
 import { getParentChainLayer } from '@arbitrum/orbit-sdk/utils';
@@ -60,12 +61,13 @@ async function main() {
 
   // get the chain config from the transaction inputs
   const chainConfig: ChainConfig = JSON.parse(tx.getInputs()[0].config.chainConfig);
+
   // get the core contracts from the transaction receipt
   const coreContracts = txReceipt.getCoreContracts();
 
   // prepare the node config
   const nodeConfigParameters: PrepareNodeConfigParams = {
-    chainName: 'My Orbit Chain',
+    chainName: 'Multibank Chain',
     chainConfig,
     coreContracts,
     batchPosterPrivateKey: process.env.BATCH_POSTER_PRIVATE_KEY as `0x${string}`,
@@ -83,6 +85,10 @@ async function main() {
 
   await writeFile('node-config.json', JSON.stringify(nodeConfig, null, 2));
   console.log(`Node config written to "node-config.json"`);
+
+  const infoJson = JSON.parse(nodeConfig.chain?.['info-json'] as string);
+  const validatorUtils = infoJson[0]?.rollup?.['validator-utils'];
+  console.log(validatorUtils)
 }
 
 main();
