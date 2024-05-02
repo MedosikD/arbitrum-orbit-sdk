@@ -13,6 +13,8 @@
     "checkJs": false,
 
     // Skip type checking for node modules
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true
   }
 }
