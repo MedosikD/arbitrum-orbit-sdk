@@ -83,8 +83,8 @@ async function main() {
 
   const nodeConfig = prepareNodeConfig(nodeConfigParameters);
 
-  await writeFile('node-config.json', JSON.stringify(nodeConfig, null, 2));
-  console.log(`Node config written to "node-config.json"`);
+  await writeFile('nodeConfig.json', JSON.stringify(nodeConfig, null, 2));
+  console.log(`Node config written to "nodeConfig.json"`);
 
   const infoJson = JSON.parse(nodeConfig.chain?.['info-json'] as string);
   const validatorUtils = infoJson[0]?.rollup?.['validator-utils'];

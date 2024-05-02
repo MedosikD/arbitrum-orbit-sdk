@@ -13,19 +13,19 @@ npm install --global yarn
 
 ## Deploy Orbit Chain
 
-1. Install orbit-sdk
+1. Clone repository and enter it
 
 ```bash
-yarn add @arbitrum/orbit-sdk viem@^1.20.0
+git clone https://github.com/MedosikD/arbitrum-orbit-sdk.git && cd ./arbitrum-orbit-sdk
 ```
 
-2. Clone repository / go to create-rollup-custom-fee-token / create .env file
+2. Install Orbit SDK, enter script folder and create .env file
 
 ```bash
-git clone https://github.com/MedosikD/arbitrum-orbit-sdk.git && cd ./arbitrum-orbit-sdk/examples/create-rollup-custom-fee-token && cp .env.example .env
+yarn add @arbitrum/orbit-sdk viem@^1.20.0 && cd ./examples/create-rollup-custom-fee-token && cp .env.example .env
 ```
 
-3. Open file uisng vim/nano and fill all variables
+3. Open .env file uisng vim/nano and pass all variables
 
 4. Install yarn dependencies
 
@@ -39,7 +39,17 @@ yarn install
 yarn dev
 ```
 
-## Generate
+6. Save deployment transaction hash
+
+## Generate config files
+
+1. Enter script directory and create .env file
+
+```bash
+cd ../prepare-node-config/ && cp .env.example .env
+```
+
+2. Open .env file uisng vim/nano and pass all variables. ORBIT_DEPLOYMENT_TRANSACTION_HASH is a has you saved from previous step.
 
 # Arbitrum Orbit SDK
 
