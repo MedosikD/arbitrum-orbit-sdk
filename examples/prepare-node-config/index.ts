@@ -101,7 +101,7 @@ async function main() {
       chainName: nodeConfigParameters.chainName,
       minL2BaseFee: 100000000,
       parentChainId: parentChain.id,
-      'parent-chain-node-url': process.env.ETHEREUM_BEACON_RPC_URL,
+      'parent-chain-node-url': "https://sepolia-rollup.arbitrum.io/rpc",
       utils: validatorUtils,
       rollup: coreContracts.rollup,
       inbox: coreContracts.inbox,

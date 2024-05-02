@@ -35,7 +35,7 @@ const deployer = privateKeyToAccount(sanitizePrivateKey(process.env.DEPLOYER_PRI
 
 async function main() {
   // generate a random chain id
-  const chainId = Number(process.env.CHAIN_ID) || generateChainId();
+  const chainId = generateChainId();
 
   // set the custom fee token
   const nativeToken: Address = process.env.CUSTOM_FEE_TOKEN_ADDRESS as `0x${string}`;
